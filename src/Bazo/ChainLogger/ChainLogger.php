@@ -1,6 +1,6 @@
 <?php
 
-namespace Bazo\ChainLogger\DI;
+namespace Bazo\ChainLogger;
 
 use \Nette\Diagnostics\Logger as NetteLogger;
 
@@ -9,7 +9,7 @@ use \Nette\Diagnostics\Logger as NetteLogger;
  *
  * @author Martin Bažík <martin@bazo.sk>
  */
-class Logger extends NetteLogger
+class ChainLogger extends NetteLogger
 {
 	/** @var NetteLogger[] */
 	private $loggers = [];

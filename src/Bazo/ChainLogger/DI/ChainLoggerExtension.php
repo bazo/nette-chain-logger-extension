@@ -22,7 +22,7 @@ class ChainLoggerExtension extends \Nette\DI\CompilerExtension
 		$config = $this->getConfig($this->defaults);
 
 		$logger = $containerBuilder->addDefinition($this->prefix('logger'))
-						->setClass('Bazo\ChainLogger\Logger');
+						->setClass('Bazo\ChainLogger\ChainLogger');
 		
 		foreach ($config['loggers'] as $loggerName => $implementation) {
 			$this->compiler->parseServices($containerBuilder, [
