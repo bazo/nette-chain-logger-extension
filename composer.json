@@ -1,0 +1,24 @@
+{
+	"name": "bazo/nette-chain-logger-extension",
+	"type": "nette-addon",
+	"description": "Nette chain logger extension",
+	"keywords": ["nette", "chain logger", "extension"],
+	"homepage": "https://github.com/bazo/nette-chain-logger-extension",
+	"authors": [
+		{
+			"name": "Martin Bažík",
+			"email": "martin@bazo.sk",
+			"homepage": "http://bazo.sk"
+		}
+	],
+	"require": {
+		"php": ">= 5.4.0"
+	},
+	"suggest": {
+		"bazo/nette-monolog-extension": "@dev",
+		"bazo/nette-watchdog-extension": "@dev"
+	},
+	"autoload": {
+		"psr-0": {"Bazo": "src/"}
+	}
+}
