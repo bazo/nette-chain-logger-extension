@@ -20,6 +20,7 @@
 		"bazo/nette-monolog-extension": "@dev",
 		"bazo/nette-watchdog-extension": "@dev"
 	},
+	"minimum-stability": "dev",
 	"autoload": {
 		"psr-0": {
 			"Bazo": "src/"

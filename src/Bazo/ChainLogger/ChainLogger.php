@@ -3,12 +3,12 @@
 namespace Bazo\ChainLogger;
 
 
-use Tracy\Logger;
+use Tracy\ILogger;
 
 /**
  * @author Martin Bažík <martin@bazo.sk>
  */
-class ChainLogger extends Logger
+class ChainLogger implements ILogger
 {
 
 	/** @var array */
