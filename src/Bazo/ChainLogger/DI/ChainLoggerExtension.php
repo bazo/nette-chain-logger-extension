@@ -3,6 +3,8 @@
 namespace Bazo\ChainLogger\DI;
 
 
+use Bazo\ChainLogger\ChainLogger;
+
 /**
  * @author Martin Bažík <martin@bazo.sk>
  */
@@ -16,7 +18,7 @@ class ChainLoggerExtension extends \Nette\DI\CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('logger'))
-				->setClass(Bazo\ChainLogger\ChainLogger::class)
+				->setClass(ChainLogger::class)
 				->setInject(FALSE);
 	}
 
@@ -35,7 +37,7 @@ class ChainLoggerExtension extends \Nette\DI\CompilerExtension
 	public function afterCompile(\Nette\PhpGenerator\ClassType $class)
 	{
 		$initialize = $class->methods['initialize'];
-		
+
 		$initialize->addBody('\Tracy\Debugger::setLogger($this->getService(?));', [$this->prefix('logger')]);
 	}
 
