@@ -13,13 +13,16 @@
 	],
 	"require": {
 		"php": ">= 5.5.0",
-		"tracy/tracy": "*"
+		"tracy/tracy": "*",
+		"nette/di": "*"
 	},
 	"suggest": {
 		"bazo/nette-monolog-extension": "@dev",
 		"bazo/nette-watchdog-extension": "@dev"
 	},
 	"autoload": {
-		"psr-0": {"Bazo": "src/"}
+		"psr-0": {
+			"Bazo": "src/"
+		}
 	}
 }
