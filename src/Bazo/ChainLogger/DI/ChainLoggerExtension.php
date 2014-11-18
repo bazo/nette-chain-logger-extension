@@ -2,49 +2,42 @@
 
 namespace Bazo\ChainLogger\DI;
 
+
 /**
- * Description of ChainLoggerExtension
- *
  * @author Martin Bažík <martin@bazo.sk>
  */
 class ChainLoggerExtension extends \Nette\DI\CompilerExtension
 {
-	/** @var Logger */
-	private $logger;
-	
-	private $defaults = [
-		'loggers' => [],
-	];
-	
+
+	const TAG_SUBSCRIBER = 'subscriber';
+
 	public function loadConfiguration()
 	{
-		$containerBuilder = $this->getContainerBuilder();
-		$config = $this->getConfig($this->defaults);
+		$builder = $this->getContainerBuilder();
 
-		$logger = $containerBuilder->addDefinition($this->prefix('logger'))
-						->setClass('Bazo\ChainLogger\ChainLogger');
-		
-		foreach ($config['loggers'] as $loggerName => $implementation) {
-			$this->compiler->parseServices($containerBuilder, [
-				'services' => [
-					$this->prefix($loggerName) => $implementation,
-				],
-			]);
+		$builder->addDefinition($this->prefix('logger'))
+				->setClass(Bazo\ChainLogger\ChainLogger::class)
+				->setInject(FALSE);
+	}
 
-			$logger->addSetup('addLogger', [$this->prefix('@' . $loggerName)]);
-		}
-		
-		$containerBuilder instanceof \Nette\DI\ContainerBuilder;
-		foreach(array_keys($containerBuilder->findByTag('logger')) as $loggerName) {
+
+	public function beforeCompile()
+	{
+		$builder = $this->getContainerBuilder();
+
+		$logger = $builder->getDefinition($this->prefix('logger'));
+		foreach (array_keys($builder->findByTag('logger')) as $loggerName) {
 			$logger->addSetup('addLogger', ['@' . $loggerName]);
 		}
 	}
 
+
 	public function afterCompile(\Nette\PhpGenerator\ClassType $class)
 	{
 		$initialize = $class->methods['initialize'];
-
-		$initialize->addBody('\Nette\Diagnostics\Debugger::$logger = $this->getService(?);', [$this->prefix('logger')]);
+		
+		$initialize->addBody('\Tracy\Debugger::setLogger($this->getService(?));', [$this->prefix('logger')]);
 	}
-}
 
+
+}

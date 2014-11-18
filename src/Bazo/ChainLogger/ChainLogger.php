@@ -2,34 +2,30 @@
 
 namespace Bazo\ChainLogger;
 
-use \Nette\Diagnostics\Logger as NetteLogger;
+
+use Tracy\Logger;
 
 /**
- * Description of Logger
- *
  * @author Martin Bažík <martin@bazo.sk>
  */
-class ChainLogger extends NetteLogger
+class ChainLogger extends Logger
 {
-	/** @var NetteLogger[] */
+
+	/** @var array */
 	private $loggers = [];
 
-	public function addLogger(NetteLogger $logger)
+	public function addLogger($logger)
 	{
 		$this->loggers[spl_object_hash($logger)] = $logger;
 	}
 
+
 	public function log($message, $priority = self::INFO)
 	{
-		foreach($this->loggers as $logger)
-		{
+		foreach ($this->loggers as $logger) {
 			$logger->log($message, $priority);
 		}
 	}
 
-	public static function register()
-	{
-		\Nette\Diagnostics\Debugger::$logger = new static();
-	}
-}
 
+}
